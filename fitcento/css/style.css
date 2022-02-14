@@ -295,16 +295,16 @@ button {
     left: 85px;
 }
 
-.banner_section {
-    width: 100%;
-    float: left;
-    background-image: url(clip-cut-menoscalidad.mpg);
-    height: auto;
-    background-size: contain;
-    padding: 200px 0px 90px 0px;
-    background-repeat: no-repeat;
-    background-size: 100%;
-}
+#video {
+ position: absolute;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: auto;
+ z-index: -10;
+ visibility: visible;
+ }
+
 
 .banner_taital {
     width: 100%;
