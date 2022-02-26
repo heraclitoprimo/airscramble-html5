@@ -8,6 +8,11 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@1.2.6/dist/web3.min.js"></script>
+<script src="main.js"></script>
     <title>Air Scramble</title>
     <!-- BOOTSTRAP CORE STYLE CSS -->
     <link href="vedio-backdiv/assets/css/bootstrap.css" rel="stylesheet" />
@@ -84,6 +89,56 @@
                 </div>
                 </div>
            </div>
+
+<script>
+    window.userWalletAddress = null
+    const loginButton = document.getElementById('loginButton')
+    const userWallet = document.getElementById('userWallet')
+
+    function toggleButton() {
+      if (!window.ethereum) {
+        loginButton.innerText = 'MetaMask is not installed'
+        loginButton.classList.remove('bg-purple-500', 'text-white')
+        loginButton.classList.add('bg-gray-500', 'text-gray-100', 'cursor-not-allowed')
+        return false
+      }
+
+      loginButton.addEventListener('click', loginWithMetaMask)
+    }
+
+    async function loginWithMetaMask() {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        .catch((e) => {
+          console.error(e.message)
+          return
+        })
+      if (!accounts) { return }
+
+      window.userWalletAddress = accounts[0]
+      userWallet.innerText = window.userWalletAddress
+      loginButton.innerText = 'Sign out of MetaMask'
+
+      loginButton.removeEventListener('click', loginWithMetaMask)
+      setTimeout(() => {
+        loginButton.addEventListener('click', signOutOfMetaMask)
+      }, 200)
+    }
+
+    function signOutOfMetaMask() {
+      window.userWalletAddress = null
+      userWallet.innerText = ''
+      loginButton.innerText = 'Sign in with MetaMask'
+
+      loginButton.removeEventListener('click', signOutOfMetaMask)
+      setTimeout(() => {
+        loginButton.addEventListener('click', loginWithMetaMask)
+      }, 200)
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      toggleButton()
+    });
+  </script>
             
          </section>
     <!-- HOME/VEDIO SECTION END-->
